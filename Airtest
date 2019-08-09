@@ -1,0 +1,8 @@
+airtestIDE中加了本地的python路径后，使用import导入同级目录下的python文件无法导入
+
+ST.PROJECT_ROOT = os.path.dirname(os.getcwd())
+print('ST.PROJECT_ROOT =', ST.PROJECT_ROOT) # OUTPUT ST.PROJECT_ROOT = F:\helloc\aircraft
+using('log_print_auhelloc.air')
+from log_print_auhelloc import log_print
+
+其中第一行，依赖于你的代码子目录层次关系，如果是多层，可以增加 os.path.dirname 的嵌套调用。
