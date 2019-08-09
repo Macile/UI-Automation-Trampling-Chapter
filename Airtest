@@ -6,3 +6,54 @@ using('log_print_auhelloc.air')
 from log_print_auhelloc import log_print
 
 其中第一行，依赖于你的代码子目录层次关系，如果是多层，可以增加 os.path.dirname 的嵌套调用。
+#***********************************************************************************
+
+Airtest寻找控件的三种方法，推荐第三种
+
+相同的app环境（即UI节点数相同）
+方法1，用时72秒
+#log_print(f'开始查找')
+#for ui_nn in ui_node_name:
+
+if ui_nn.get_text() == 'woohoo':
+ui_nn.click()
+log_print(f'查找控件XX成功')
+break
+#else:
+
+log_print(f'查找控件XX失败')
+方法2，用时11秒
+#log_print(f'开始查找')
+#ui_node_name = poco_lua_app('UpdateScene').offspring(text='woohoo')
+#ui_node_name.click()
+#log_print(f'查找控件XX结束')
+
+方法3，用时18秒
+log_print(f'开始查找')
+poco_lua_app(text='woohoo').click()
+log_print(f'查找控件XX结束')
+
+方法2比方法1，效率要高出85%
+
+#***********************************************************************************
+Airtest在代码里生成测试报告
+
+from airtest.report.report import simple_report
+simple_report(file,logpath="C:/Users/Administrator/AppData/Local/Temp/AirtestIDE/scripts/d022ead61eabf6262ae4861904984f93",output="C:/log.html")
+
+#***********************************************************************************
+Airtest错误
+('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+
+出现原因：当你要操作的poco'对象不存在时，会出现这个错。
+#***********************************************************************************
+Airtest连接windows程序测试命令
+
+airtest run Pocotest.air --device Windows:///?title="Cocos Simulator - simulator" --log log/
+#***********************************************************************************
+2.PC平台使用Poco的时候控件会有一些偏移，比如Click()的时候。
+解决方案：Click([偏移量，偏移量]) 举个栗子：xxxx.Click([0.5,0.5])或者xxxx.Click([-0.5,-0.5])
+#***********************************************************************************
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+别用安卓5的模拟器跑airtest
